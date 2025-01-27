@@ -909,12 +909,12 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 0
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: fe6ef350-e8dc-472d-b20a-2904bbbfb0a0
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
+  projectName: SevenDaysBuild - topdown Roguelike Survival
   organizationId: unity_0810ghdbs
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
