@@ -9,21 +9,23 @@ public class EnemyControl : MonoBehaviour
     private float attackRange = 0.6f;
 
     //Scripts
-    private Movement movement;
-    private Attack attack;
-    private Damaged damaged;
-
-    //Animator
     private Animator animator;
+    private EnemyAttack attack;
+    private EnemyDamaged damaged;
+    private EnemyMovement movement;
+    private EnemyStatManager statManager;
+
+    //CoolTime
+    private float lastAttackTime = -1;
 
 
     void Awake()
     {
+        statManager = GetComponent<EnemyStatManager>();
+        movement = GetComponent<EnemyMovement>();
+        damaged = GetComponent<EnemyDamaged>();
+        attack = GetComponent<EnemyAttack>();
         animator = GetComponent<Animator>();
-
-        movement = GetComponent<Movement>();
-        attack = GetComponent<Attack>();
-        damaged = GetComponent<Damaged>();
     }
 
     void Update() 
@@ -31,8 +33,12 @@ public class EnemyControl : MonoBehaviour
         if(Vector3.Distance(player.position, transform.position) < attackRange)
         {
             animator.SetBool("1_Move", false);
-            animator.SetTrigger("2_Attack");
-            attack.AttackPlayer();
+            if(Time.realtimeSinceStartup - lastAttackTime >= statManager.Cooldown)
+            {
+                lastAttackTime = Time.realtimeSinceStartup;
+                animator.SetTrigger("2_Attack");
+                attack.AttackPlayer();
+            }
         }
         else if(Vector3.Distance(player.position, transform.position) < detectionRange)
         {
@@ -44,13 +50,5 @@ public class EnemyControl : MonoBehaviour
     public void SetTarget(Transform target)
     {
         player = target;
-    }
-
-    void OnTriggerEnter2D(Collider2D other) 
-    {
-        if(other.tag == "weapon")
-        {
-
-        }
     }
 }

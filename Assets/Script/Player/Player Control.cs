@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    private Animator animator;
+    private Animate animate;
+    private PlayerAttack playerAttack;
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
+        animate = GetComponent<Animate>();
+        playerAttack = GetComponent<PlayerAttack>();
     }
     void Update()
     {
@@ -20,16 +22,17 @@ public class PlayerControl : MonoBehaviour
 
         if(moveX != 0 || moveY != 0)
         {
-            animator.SetBool("1_Move", true);
+            animate.moveOn();
         }
         else
         {
-            animator.SetBool("1_Move", false);
+            animate.moveOff();
         }
 
         if(Input.GetKeyDown(KeyCode.J))
         {
-            animator.SetTrigger("2_Attack");
+            animate.IsAttacked();
+            playerAttack.AttackEnemy();
         }
     }
 }
